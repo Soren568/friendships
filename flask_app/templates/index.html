@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendships</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+</head>
+<body>
+    <!-- Table showing correlating friends -->
+    <!-- 2 Forms: Insert User/ Insert Friendship -->
+    <div class="container">
+        <div class="row align-items-start">
+            <!-- LEFT COLUMN -->
+            <div class="col p-5">
+                <h1 class="d-6 mb-3 test">Friendships</h1>
+                <!-- TABLE OF Friendships -->
+                <table class="table table-striped">
+                    <tr>
+                        <th scope="col">User</th>
+                        <th scope="col">Friend</th>
+                    </tr>
+                    {% for f in friendships%}
+                    <tr>
+                        <td>{{f.first_name}} {{f.last_name}}</td>
+                        <td>{{f.friends_first_name}} {{f.friends_last_name}}</td>
+                    </tr>
+                    {%endfor%}
+                </table>
+            </div>
+            <!-- RIGHT COL -->
+            <div class="col p-5">
+                <!-- Save User Form -->
+                <h1>Add User</h1>
+                <form action="/save_user" method="post" class="mb-5">
+                    <div class="mb-3 row ">
+                        <label for="first_name" class="col-sm col-form-label">First Name: </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="first_name" name="first_name">
+                        </div>
+                    </div>
+                    <div class="mb-4 row ">
+                        <label for="last_name" class="col-sm col-form-label">Last Name: </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="last_name" name="last_name">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Add User</button>
+                </form>
+                <!-- Add Friendship Form -->
+                <h1>Create Friendship</h1>
+                <form action="/save_friendship" method="post" class="mb-5">
+                    <div class="mb-3 row ">
+                        <label for="user" class="col-sm col-form-label">User: </label>
+                        <div class="col-sm-6">
+                            <select class="form-select" name="user_id">
+                                <option selected>Open this select menu</option>
+                                {% for u in users %}
+                                <option value="{{u.id}}">{{u.first_name}} {{u.last_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row ">
+                        <label for="friend" class="col-sm col-form-label">Friend: </label>
+                        <div class="col-sm-6">
+                            <select class="form-select" name="friend_id">
+                                <option selected>Open this select menu</option>
+                                {% for u in users %}
+                                <option value="{{u.id}}">{{u.first_name}} {{u.last_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">Add Friends</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+            crossorigin="anonymous"></script>
+</body>
+</html>
